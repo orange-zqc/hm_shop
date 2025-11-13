@@ -1,13 +1,13 @@
 // 1. 导入Flutter框架
 import 'package:flutter/material.dart';
-import 'package:hmshop/pages/Login/index.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hmshop/pages/Main/index.dart';
 
+// 1. 获取路由组件
 Widget getRouteWidget() {
-  return MaterialApp(
+  return GetMaterialApp(
     initialRoute: '/',
     routes: getRootRoutes(),
-
   );
 }
 
@@ -16,11 +16,6 @@ Map<String, Widget Function(BuildContext)> getRootRoutes() {
   return {
     // 1. 首页路由
     '/': (context) => const MainPage(),
-
-
-    // 2. 登录页路由
-    '/login': (context) => const LoginPage(),
-
   };
 }
 
