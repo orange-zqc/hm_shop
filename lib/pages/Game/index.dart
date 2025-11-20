@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class GameView extends StatefulWidget {
   const GameView({super.key});
 
@@ -11,7 +12,8 @@ class _GameViewState extends State<GameView> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('游戏'),
+      child: Text('GameView'),
     );
+
   }
 }

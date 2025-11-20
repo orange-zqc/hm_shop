@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:hmshop/contants/Home/Category.dart';
-import 'package:hmshop/contants/Home/HomeSlider.dart';
-import 'package:hmshop/contants/Home/MoreGrid.dart';
-import 'package:hmshop/contants/Home/Search.dart';
+import 'package:hmshop/widget/Home/Category.dart';
+import 'package:hmshop/widget/Home/HomeSlider.dart';
+import 'package:hmshop/widget/Home/MoreGrid.dart';
+import 'package:hmshop/widget/Home/Search.dart';
 
-class HomeView extends StatelessWidget {
+
+class HomeView extends StatefulWidget {
   final Function(int) onCategoryTap;
   
   const HomeView({super.key, required this.onCategoryTap});
 
   @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> with TickerProviderStateMixin{
+
+  
+  @override 
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -34,7 +42,7 @@ class HomeView extends StatelessWidget {
             child: Column(
               children: [
                 Search(),
-                Category(onCategoryTap: onCategoryTap),
+                Category(onCategoryTap: widget.onCategoryTap),
               ],
             ),
           ),
@@ -42,4 +50,6 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
+
+
 }

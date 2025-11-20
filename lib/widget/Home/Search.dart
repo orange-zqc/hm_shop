@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hmshop/widget/Home/ToSearch.dart';
+
 
 class Search extends StatefulWidget {
   const Search({super.key});
@@ -10,7 +12,9 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
     /// 导航到搜索页面方法
     void _navigateToSearchPage() {
-   
+      //获取上下文导航
+      Navigator.push(context, MaterialPageRoute(builder: (context) => ToSearch()));
+      
   }
 
 
@@ -41,7 +45,7 @@ class _SearchState extends State<Search> {
           // 搜索框
           Expanded(
             child: GestureDetector(
-              onTap: _navigateToSearchPage,
+              onTap: _navigateToSearchPage, 
               child: Container(
                 height: 27,
                 decoration: BoxDecoration(

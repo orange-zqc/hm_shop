@@ -6,7 +6,7 @@ void main() {
   // 设置状态栏颜色为灰色
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.grey.withOpacity(0.01),
-    statusBarIconBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.dark, // 状态栏图标颜色为深色
   )); 
   runApp(getRouteWidget());
 }

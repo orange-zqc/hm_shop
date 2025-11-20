@@ -22,7 +22,7 @@ class _MineViewState extends State<MineView> {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset('lib/assets/MineBackGround.png', fit: BoxFit.cover,),             
+            child: Image.asset('lib/assets/轮播1.jpg', fit: BoxFit.cover,),             
           ),
           Positioned(
             top: 30,

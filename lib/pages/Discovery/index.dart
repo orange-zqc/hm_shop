@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hmshop/widget/Discovery/DiscoveryHome.dart';
 
 class DiscoveryView extends StatefulWidget {
   const DiscoveryView({super.key});
@@ -11,7 +12,7 @@ class _DiscoveryViewState extends State<DiscoveryView> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text('发现'),
+      child: Discoveryhome(),
     );
   }
 }

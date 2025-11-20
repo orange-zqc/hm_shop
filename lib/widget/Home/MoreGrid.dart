@@ -1,6 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:hmshop/api/Home.dart';
+import 'package:hmshop/viewmodels/VedioBean.dart';
+import 'package:hmshop/widget/Live/PlayDetail.dart';
 import 'package:marquee/marquee.dart';
 
 class MoreGrid extends StatefulWidget {
@@ -13,47 +16,21 @@ class MoreGrid extends StatefulWidget {
 class _MoreGridState extends State<MoreGrid> {
 
     // 存放所有文件（包含lib/assets目录下的所有图片资源）
-    final List<String> _gridImages = [
-      'lib/assets/2001太空漫游.jpg',
-      'lib/assets/7号房的礼物.jpg',
-      'lib/assets/一一.jpg',
-      'lib/assets/一个叫欧维的男人决定去死.jpg',
-      'lib/assets/七宗罪.jpg',
-      'lib/assets/七武士.jpg',
-      'lib/assets/三傻大闹宝莱坞.jpg',
-      'lib/assets/三块广告牌.jpg',
-      'lib/assets/上帝之城.jpg',
-      'lib/assets/东京教父.jpg',
-      'lib/assets/东邪西毒.jpg',
-      'lib/assets/两杆大烟枪.jpg',
-      'lib/assets/九品芝麻官.jpg',
-      'lib/assets/乱世佳人.jpg',
-      'lib/assets/人工智能.jpg',
-      'lib/assets/低俗小说.jpg',
-      'lib/assets/何以为家.jpg',
-      'lib/assets/你的名字.jpg',
-      'lib/assets/你看起来好像很好吃.jpg',
-      'lib/assets/侧耳倾听.jpg',
-      'lib/assets/借东西的小人阿莉埃蒂.jpg',
-      'lib/assets/一个叫欧维的男人决定去死.jpg'
-    ];
+    List<VedioBean> vedioList = [];
+
 
 
     @override
     void initState() {
       super.initState();
+      //
+      _getVedioList();
     }
+    void _getVedioList() async{
+      vedioList = await getVedioListApi();
+    setState(() {});
+  }
     
-    /// 从文件路径中提取文件名（不包含扩展名）
-    String _getFileNameFromPath(String path) {
-      // 获取文件名部分（不包含路径）
-      String fileName = path.split('/').last;
-      // 去掉扩展名
-      if (fileName.contains('.')) {
-        return fileName.substring(0, fileName.lastIndexOf('.'));
-      }
-      return fileName;
-    }
 
 
 
@@ -146,40 +123,80 @@ class _MoreGridState extends State<MoreGrid> {
               mainAxisSpacing: 8, // 行间距
               childAspectRatio: 0.6, // 项目纵横比（宽度/高度）
             ),
-            itemCount: _gridImages.length,
+            itemCount: vedioList.length,
             itemBuilder: (context, index) {
-              return Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.grey[200],
-                ),
-                child: Column(
-                  children: [
-                    // 内容图片
-                    Expanded(
-                      child: Container(
+              return GestureDetector(
+                onTap: () {
+                  // 跳转到播放详情页，并传递vod_id
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PlayDetail(vedioId: vedioList[index].id)
+                    )
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    children: [
+                      // 内容图片
+                      Container(
+                        height: 160, // 设置固定高度
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.vertical(top: Radius.circular(5)),
-                          image: DecorationImage(
-                            image: AssetImage(_gridImages[index]),
+                        ),
+                        // 裁剪图片
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.vertical(top: Radius.circular(5)),
+                          child: Image.network(
+                            vedioList[index].imageUrl,
                             fit: BoxFit.cover,
-                          ),
+                            errorBuilder: (context, error, stackTrace) {
+                              print('图片加载失败: ${vedioList[index].imageUrl}, 错误: $error');
+                            // 加载失败时使用本地图片作为回退
+                            return Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(5)),
+                                image: DecorationImage(
+                                  image: AssetImage('lib/assets/轮播1.jpg'), // 使用默认本地图片
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                          },
+                          loadingBuilder: (context, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            // 加载中显示进度指示器
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes != null
+                                    ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                                    : null,
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),
+
                     // 内容标题
                     Padding(
-                      padding: EdgeInsets.all(4), // 内容标题内边距
+                      padding: EdgeInsets.all(3), // 内容标题内边距
                       child: Text(
-                        // 从图片路径中提取文件名（不包含扩展名）
-                        _getFileNameFromPath(_gridImages[index]),
-                        style: TextStyle(fontSize: 10),
-                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        // 内容标题
+                        vedioList[index].name,
+                        style: TextStyle(fontSize: 10,),
+                        overflow: TextOverflow.ellipsis, //
                       ),
                     ),
                   ],
                 ),
-              );
+              ),
+            );
             },
           ),
         ],

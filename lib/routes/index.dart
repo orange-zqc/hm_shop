@@ -6,8 +6,13 @@ import 'package:hmshop/pages/Main/index.dart';
 // 1. 获取路由组件
 Widget getRouteWidget() {
   return GetMaterialApp(
+    debugShowCheckedModeBanner: false,
+    debugShowMaterialGrid: false,
+    showSemanticsDebugger: false,
+
     initialRoute: '/',
     routes: getRootRoutes(),
+
   );
 }
 

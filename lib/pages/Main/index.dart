@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hmshop/contants/Home/Category.dart';
-import 'package:hmshop/contants/Home/Search.dart';
+
 import 'package:hmshop/pages/Discovery/index.dart';
 import 'package:hmshop/pages/Game/index.dart';
 import 'package:hmshop/pages/Home/index.dart';
@@ -16,6 +15,8 @@ import 'package:hmshop/pages/TopNavigationBar/Playlet.dart';
 import 'package:hmshop/pages/TopNavigationBar/TvDrama.dart';
 import 'package:hmshop/pages/TopNavigationBar/VarietyShowRecord.dart';
 import 'package:hmshop/pages/WatchPage/index.dart';
+import 'package:hmshop/widget/Home/Category.dart';
+import 'package:hmshop/widget/Home/Search.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -24,7 +25,7 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> with TickerProviderStateMixin{
+class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   // 底部导航栏的索引
   int _bottomIndex = 0;
   // 底部导航栏控制器
